@@ -24,4 +24,4 @@ Route::post('/getpost','Controllers\Postcontroller@getposts');
 Route::post('/getcomment','Controllers\CommentsController@getcomment');
 Route::post('/deletecomment','Controllers\CommentsController@deletecomment');
 Route::post('/deletepost','Controllers\Postcontroller@deletepost');
-
+Route::post('/updateviews','Controllers\Postcontroller@updateviews');
