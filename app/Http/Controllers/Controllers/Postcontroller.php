@@ -5,12 +5,11 @@ namespace App\Http\Controllers\controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use \App\models\Post;
 class Postcontroller extends Controller
 {
     public function index(Request $request)
     {
-
         $data= (new \App\models\Post)->paginate(10);
         return response()->json($data);
     }
@@ -53,5 +52,21 @@ class Postcontroller extends Controller
 
 
     }
+    public function updateviews(Request $request){
+
+        $body = $request->all();
+        $id= $body['id'];
+        $data = (new \App\models\Post)->where('id', $id) ->increment('views', 1);
+        if ($data)
+        {
+            return response()->json(['message'=> 'update DONE']);
+
+        }
+        else
+            return response()->json(['message'=> 'NOT FOUND']);
+
+
+    }
+
 }
 
