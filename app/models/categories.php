@@ -8,4 +8,9 @@ class categories extends Model
 {
     protected $table = 'categories';
     public $timestamps = false;
+    public function post()
+    {
+        return $this->hasMany('App\models\Post');
+
+    }
 }
