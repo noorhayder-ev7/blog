@@ -8,4 +8,9 @@ class Comments extends Model
 {
     protected $table = 'comments';
     public $timestamps = false;
+    public function user()
+    {
+        return $this->belongsTo('App\models\User')->select(['id', 'email']);
+
+    }
 }

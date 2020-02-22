@@ -15,18 +15,7 @@ class Postcontroller extends Controller
 
         return response()->json($data);
     }
-//    public function index2(Request $request)
-//    {    $sortby=input('sortby');
-//    if($sortby==0) {
-//        $data = (new \App\models\Post)->paginate(10);
-//        return response()->json($data);
-//    }
-//    elseif ($sortby==1){
-//        $data = (new \App\models\Post)->where('views'==max)->paginate(10);
-//        return response()->json($data);
-//
-//    }
-//    }
+
     public function getposts(Request $request)
     {
         $post = new \App\models\Post;

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Controllers;
 
+use App\models\Comments;
+use App\models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -41,5 +43,11 @@ class CommentsController extends Controller
             return response()->json(['message'=> 'NOT FOUND']);
 
 
+    }
+    public function commentpagination(Request $request)
+    {
+        $data= Comments::with(['user'])->paginate(10);
+
+        return response()->json($data);
     }
 }
