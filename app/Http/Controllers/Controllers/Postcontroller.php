@@ -10,9 +10,9 @@ class Postcontroller extends Controller
 {
     public function index(Request $request)
     {
-//        $data= (new \App\models\Post)->paginate(10);
-        $data= (new \App\models\Post)->with(['user','cat'])->paginate(10);
-//        $data= (new \App\models\Post)->with('cat')->paginate(10);
+
+        $data= Post::with(['user','cat'])->paginate(10);
+
         return response()->json($data);
     }
 //    public function index2(Request $request)

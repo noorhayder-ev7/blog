@@ -4,13 +4,11 @@ namespace App\models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Category extends Model
 {
-    protected $table = 'users';
-    protected $hidden = ['password'];
+    protected $table = 'categories';
     public $timestamps = false;
-    public function post()
-    {
+    public function posts()     {
         return $this->hasMany('App\models\Post');
 
     }

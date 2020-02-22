@@ -10,11 +10,12 @@ class Post extends Model
     public $timestamps = false;
     public function user()
     {
-        return $this->belongsTo('App\models\User');
+        return $this->belongsTo('App\models\User')->select(['id', 'name','picture']);
+
     }
     public function cat()
     {
-        return $this->belongsTo('App\models\categories');
+        return $this->belongsTo('App\models\Category', 'category_id');
     }
 
 }
