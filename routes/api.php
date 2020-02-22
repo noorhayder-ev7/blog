@@ -19,7 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/users','Controllers\Usercontroller@register');
 Route::post('/user','Controllers\Usercontroller@login');
 Route::get('/cat','Controllers\CategoriesController@getcat');
-Route::get('/post','Controllers\Postcontroller@index');
+Route::get('/posttpagination','Controllers\Postcontroller@index');
+Route::get('/commentpagination','Controllers\CommentsController@commentpagination');
 Route::post('/getpost','Controllers\Postcontroller@getposts');
 Route::post('/getcomment','Controllers\CommentsController@getcomment');
 Route::post('/deletecomment','Controllers\CommentsController@deletecomment');
