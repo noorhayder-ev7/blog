@@ -10,7 +10,7 @@ class Comments extends Model
     public $timestamps = false;
     public function user()
     {
-        return $this->belongsTo('App\models\User')->select(['id', 'email']);
+        return $this->belongsTo('App\models\User')->select(['id','name', 'email']);
 
     }
 }

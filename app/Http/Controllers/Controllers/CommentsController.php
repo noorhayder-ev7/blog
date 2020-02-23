@@ -45,8 +45,9 @@ class CommentsController extends Controller
 
     }
     public function commentpagination(Request $request)
-    {
-        $data= Comments::with(['user'])->paginate(10);
+    {   $body = $request->all();
+        $id= $body['post_id'];
+        $data=(new \App\models\Comments)->where('post_id', $id)->with(['user'])->paginate(10);
 
         return response()->json($data);
     }

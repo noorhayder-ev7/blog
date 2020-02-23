@@ -44,4 +44,20 @@ class Usercontroller extends Controller
 
 
     }
+    public function profile(Request $request){
+
+        $body = $request->all();
+        $id = $body['id'];
+        $data = (new \App\models\User)->where('id',$id)->first();
+        if ($data)
+        {
+            return response()->json($data);
+
+        }
+        else
+            return response()->json(['message'=> 'NOT FOUND']);
+
+
+    }
+
 }
