@@ -20,7 +20,7 @@ Route::post('/users','Controllers\Usercontroller@register');
 Route::post('/user','Controllers\Usercontroller@login');
 Route::post('/profile','Controllers\Usercontroller@profile');
 Route::get('/cat','Controllers\CategoriesController@getcat');
-Route::get('/posttpagination','Controllers\Postcontroller@index');
+//Route::get('/posttpagination','Controllers\Postcontroller@index');
 Route::post('/posttpagination','Controllers\Postcontroller@index2');
 Route::post('/commentpagination','Controllers\CommentsController@commentpagination');
 Route::post('/getpost','Controllers\Postcontroller@getposts');
