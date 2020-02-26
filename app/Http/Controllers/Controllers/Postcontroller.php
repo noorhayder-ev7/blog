@@ -15,18 +15,21 @@ class Postcontroller extends Controller
 
         return response()->json($data);
     }
-//    public function index2(Request $request)
-//    {    $sortby=input('sortby');
-//    if($sortby==0) {
-//        $data = (new \App\models\Post)->paginate(10);
-//        return response()->json($data);
-//    }
-//    elseif ($sortby==1){
-//        $data = (new \App\models\Post)->where('views'==max)->paginate(10);
-//        return response()->json($data);
-//
-//    }
-//    }
+    public function index2(Request $request)
+    {    $sortby=$request->input('sortby');
+    if($sortby==0) {
+        $data = Post::paginate(10);
+        return response()->json($data);
+    }
+    elseif ($sortby==1){
+
+        $data = Post::query()->orderBy('views','desc')->paginate(10);
+        return response()->json($data);
+
+    }
+
+        return response()->json(['message'=> 'NOT FOUND']);
+    }
     public function getposts(Request $request)
     {
         $post = new \App\models\Post;
@@ -41,16 +44,28 @@ class Postcontroller extends Controller
         $post->tags="NULL";
         $post->status="0";
         $post->category_id=$request->input('category_id');
+        /*$post->image($request, [
+            'input_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);*/
+
+        if ($request->hasFile('input_img')) {
+            $image = $request->file('input_img');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+
+            $post->image = $name;
+
         $post->save();
         if ($post)
-        {
-            return response()->json($post);
-
+        { return back()->with('success','Image Upload successfully');
+//            return response()->json($post);
+//
         }
         else
             return response()->json(['message'=> 'NOT FOUND']);
 
-    }
+    }}
     public function deletepost(Request $request){
 
         $body = $request->all();

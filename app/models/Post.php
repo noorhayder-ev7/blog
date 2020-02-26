@@ -18,4 +18,5 @@ class Post extends Model
         return $this->belongsTo('App\models\Category', 'category_id');
     }
 
+
 }

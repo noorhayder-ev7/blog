@@ -5,30 +5,29 @@ namespace App\Http\Controllers\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use phpDocumentor\Reflection\Types\String_;
-
+use App\models\User;
 class Usercontroller extends Controller
 {
     public function register(Request $request)
     {
-            $id=rand(1000000,9999999);
-            $users = new \App\models\User;
-            $users->id=$id;
+
+            $users = new User;
+            $random_id = rand(1000000,9999999);
+            $users->id = $random_id;
             $users->name = $request->input('name');
             $users->email = $request->input('email');
             $users->password = $request->input('password');
+           $users->save();
 
-            $users->save();
-        if ($users)
-        {
-            return response()->json($users);
-
-        }
-        else
-            return response()->json(['message'=> 'NOT FOUND']);
-
-
+            if ($users) {
+                $users->id = $random_id;
+                return response()->json($users);}
+                else
+                return response()->json(['message' => 'ERROR']);
 
     }
+
+
 
     public function login(Request $request){
 
