@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use phpDocumentor\Reflection\Types\String_;
 
 class Usercontroller extends Controller
 {
     public function register(Request $request)
     {
-
+            $id=rand(1000000,9999999);
             $users = new \App\models\User;
+            $users->id=$id;
             $users->name = $request->input('name');
             $users->email = $request->input('email');
             $users->password = $request->input('password');
