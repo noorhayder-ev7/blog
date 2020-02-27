@@ -66,7 +66,7 @@ class Usercontroller extends Controller
         return response()->json($data);
     }
     elseif ($sortby==1){
-        $data = User::orderBy('points', 'desc')->paginate(3);
+        $data = User::orderBy('points', 'desc')->paginate(10);
         return response()->json($data);
     }
     }
