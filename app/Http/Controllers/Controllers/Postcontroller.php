@@ -49,14 +49,17 @@ class Postcontroller extends Controller
             'input_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);*/
 
-        if ($request->hasFile('input_img')) {
+        if ($request->hasFile('input_img'))
+        {
             $image = $request->file('input_img');
             $name = time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
             $image->move($destinationPath, $name);
-
             $post->image = $name;
 
+
+
+         }
         $post->save();
         if ($post)
         { return back()->with('success','Image Upload successfully');
@@ -66,7 +69,7 @@ class Postcontroller extends Controller
         else
             return response()->json(['message'=> 'NOT FOUND']);
 
-    }}
+    }
     public function deletepost(Request $request){
 
         $body = $request->all();
