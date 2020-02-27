@@ -60,9 +60,15 @@ class Usercontroller extends Controller
 
     }
     public function userpagination(Request $request)
-    {
-        $data=User::paginate(10);
+    {  $sortby=$request->input('sortby');
+    if($sortby==0) {
+        $data = User::paginate(10);
         return response()->json($data);
+    }
+    elseif ($sortby==1){
+        $data = User::orderBy('points', 'desc')->paginate(3);
+        return response()->json($data);
+    }
     }
 
 }
