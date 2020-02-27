@@ -18,12 +18,13 @@ class Postcontroller extends Controller
     public function index2(Request $request)
     {    $sortby=$request->input('sortby');
     if($sortby==0) {
-        $data = Post::paginate(10);
+        $data = Post::with(['user','cat'])->paginate(10);
         return response()->json($data);
     }
     elseif ($sortby==1){
+        $data = Post::with(['user','cat'])->orderBy('views','desc')->paginate(10);
 
-        $data = Post::query()->orderBy('views','desc')->paginate(10);
+//        $data = Post::query()->orderBy('views','desc')->paginate(10);
         return response()->json($data);
 
     }
