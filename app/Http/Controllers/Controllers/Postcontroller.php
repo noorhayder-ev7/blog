@@ -7,38 +7,38 @@ use App\Http\Controllers\Controller;
 use \App\models\Post;
 class Postcontroller extends Controller
 {
-    public function index(Request $request)
+    public function postpagination(Request $request)
     {
-
-        $data= Post::with(['user','cat'])->paginate(10);
+        $body = $request->all();
+        $id= $body['user_id'];
+        $data= Post::with('user')->where('user_id', $id)->paginate(10);
 
         return response()->json($data);
     }
-    public function index2(Request $request)
+    public function index(Request $request)   //get posts depend on sort by
     {    $sortby=$request->input('sortby');
-       if($sortby==0)
+       if($sortby==0)// get all posts by default
        {
         $data = Post::with(['user','cat'])->paginate(10);
         return response()->json($data);
        }
-    elseif ($sortby==1)
+       elseif ($sortby==1)//get posts depend on views
     {
         $data = Post::with(['user','cat'])->orderBy('views','desc')->paginate(10);
         return response()->json($data);
 
     }
-
-       elseif ($sortby==2)
+       elseif ($sortby==2)//get posts depend on recent post
        {
            $data = Post::with(['user','cat'])->latest()->paginate(10);
            return response()->json($data);
 
        }
-        return response()->json(['message'=> 'NOT FOUND']);
+        return response()->json(['message'=> 'ERROR']);
     }
-    public function getposts(Request $request)
+    public function addposts(Request $request)
     {
-        $post = new \App\models\Post;
+        $post = new Post();
         $post->user_id=$request->input('user_id');
         $post->title = $request->input('title');
         $post->content = $request->input('content');
@@ -50,9 +50,7 @@ class Postcontroller extends Controller
         $post->tags="NULL";
         $post->status="0";
         $post->category_id=$request->input('category_id');
-
-
-        if ($request->hasFile('input_img'))
+        if ($request->hasFile('input_img'))//read and store img.
         {
             $image = $request->file('input_img');
             $name = time().'.'.$image->getClientOriginalExtension();
@@ -77,7 +75,7 @@ class Postcontroller extends Controller
 
         $body = $request->all();
         $id= $body['id'];
-        $data = (new \App\models\Post)->where('id', $id)->delete();
+        $data = Post::where('id', $id)->delete();
         if ($data)
         {
             return response()->json(['message'=> 'DONE']);
@@ -92,7 +90,7 @@ class Postcontroller extends Controller
 
         $body = $request->all();
         $id= $body['id'];
-        $data = (new \App\models\Post)->where('id', $id) ->increment('views', 1);
+        $data = Post::where('id', $id) ->increment('views', 1);
         if ($data)
         {
             return response()->json(['message'=> 'update DONE']);

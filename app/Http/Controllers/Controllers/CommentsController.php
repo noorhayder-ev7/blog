@@ -10,9 +10,9 @@ use App\Http\Controllers\Controller;
 
 class CommentsController extends Controller
 {
-    public function getcomment(Request $request)
+    public function addcomment(Request $request)
     {
-        $cmt = new \App\models\Comments;
+        $cmt = new Comments();
         $cmt->user_id=$request->input('user_id');
         $cmt->post_id=$request->input('post_id');
         $cmt->content = $request->input('content');
@@ -33,7 +33,7 @@ class CommentsController extends Controller
 
         $body = $request->all();
         $id= $body['id'];
-        $data = (new \App\models\Comments)->where('id', $id)->delete();
+        $data = Comments::where('id', $id)->delete();
         if ($data)
         {
             return response()->json(['message'=> 'DONE']);
@@ -48,7 +48,7 @@ class CommentsController extends Controller
     {   $body = $request->all();
         $id= $body['post_id'];
 
-        $data=(new \App\models\Comments)->where('post_id', $id)->with(['user'])->paginate(10);
+        $data=Comments::where('post_id', $id)->with(['user'])->latest()->paginate(6);
 
         return response()->json($data);
     }
