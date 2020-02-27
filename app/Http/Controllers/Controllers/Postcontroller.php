@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\controllers;
-
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,18 +16,24 @@ class Postcontroller extends Controller
     }
     public function index2(Request $request)
     {    $sortby=$request->input('sortby');
-    if($sortby==0) {
+       if($sortby==0)
+       {
         $data = Post::with(['user','cat'])->paginate(10);
         return response()->json($data);
-    }
-    elseif ($sortby==1){
+       }
+    elseif ($sortby==1)
+    {
         $data = Post::with(['user','cat'])->orderBy('views','desc')->paginate(10);
-
-//        $data = Post::query()->orderBy('views','desc')->paginate(10);
         return response()->json($data);
 
     }
 
+       elseif ($sortby==2)
+       {
+           $data = Post::with(['user','cat'])->latest()->paginate(10);
+           return response()->json($data);
+
+       }
         return response()->json(['message'=> 'NOT FOUND']);
     }
     public function getposts(Request $request)
@@ -45,9 +50,7 @@ class Postcontroller extends Controller
         $post->tags="NULL";
         $post->status="0";
         $post->category_id=$request->input('category_id');
-        /*$post->image($request, [
-            'input_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);*/
+
 
         if ($request->hasFile('input_img'))
         {
@@ -63,9 +66,8 @@ class Postcontroller extends Controller
         $post->save();
         if ($post)
         {
-            // return back()->with('success','Image Upload successfully');
             return response()->json($post);
-//
+
         }
         else
             return response()->json(['message'=> 'NOT FOUND']);
