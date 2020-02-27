@@ -56,14 +56,15 @@ class Postcontroller extends Controller
             $destinationPath = public_path('/images');
             $image->move($destinationPath, $name);
             $post->image = $name;
-
-
+            $post->save();
+            return back()->with('success','Image Upload successfully');
 
          }
         $post->save();
         if ($post)
-        { return back()->with('success','Image Upload successfully');
-//            return response()->json($post);
+        {
+            // return back()->with('success','Image Upload successfully');
+            return response()->json($post);
 //
         }
         else
