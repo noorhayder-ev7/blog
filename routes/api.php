@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/registerusers','Controllers\Usercontroller@register');
 Route::post('/loginuser','Controllers\Usercontroller@login');
 Route::post('/profile','Controllers\Usercontroller@profile');
-Route::get('/userpagination','Controllers\Usercontroller@userpagination');
+Route::post('/userpagination','Controllers\Usercontroller@userpagination');
 Route::get('/cat','Controllers\CategoriesController@getcat');
 Route::post('/posttpagination','Controllers\Postcontroller@index');
 Route::post('/PosttPaginationByUserId','Controllers\Postcontroller@postpagination');
