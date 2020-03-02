@@ -82,8 +82,8 @@ class Postcontroller extends Controller
             $destinationPath = public_path('/images');
             $image->move($destinationPath, $name);
             $post->image = $name;
+
             $post->save();
-            $this->uploadFileToDisk($request, $image, $post, $destinationPath);
             return response()->json($post);
 //            return back()->with('success','Image Upload successfully');
 
