@@ -11,7 +11,7 @@ class Postcontroller extends Controller
     {
         $body = $request->all();
         $id= $body['user_id'];
-        $data= Post::with(['user','cat'])->where('user_id', $id)->paginate(10);
+        $data= Post::with(['user','cat'])->where('user_id', $id)->latest()->paginate(10);
 
         return response()->json($data);
     }
@@ -40,12 +40,19 @@ class Postcontroller extends Controller
         elseif($cat==1) {
             $body = $request->all();
             $id= $body['category_id'];
-            if ($sortby == 1)//get posts depend on views
+            if ($sortby == 0)// get all posts by default
+            {
+                $data = Post::with(['user', 'cat'])->paginate(10);
+                return response()->json($data);
+            }
+
+            elseif ($sortby == 1)//get posts depend on views
             {
                 $data = Post::with(['user', 'cat'])->where('category_id',$id)->orderBy('views', 'desc')->paginate(10);
                 return response()->json($data);
 
-            } elseif ($sortby == 2)//get posts depend on recent post
+            }
+            elseif ($sortby == 2)//get posts depend on recent post
             {
                 $data = Post::with(['user', 'cat'])->where('category_id',$id)->latest()->paginate(10);
                 return response()->json($data);
@@ -76,7 +83,9 @@ class Postcontroller extends Controller
             $image->move($destinationPath, $name);
             $post->image = $name;
             $post->save();
-            return back()->with('success','Image Upload successfully');
+            $this->uploadFileToDisk($request, $image, $post, $destinationPath);
+            return response()->json($post);
+//            return back()->with('success','Image Upload successfully');
 
          }
         $post->save();
