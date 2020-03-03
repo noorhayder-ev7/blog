@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('/registerusers','Controllers\Usercontroller@register');
 Route::post('/loginuser','Controllers\Usercontroller@login');
+Route::post('/getSearchResults','Controllers\Usercontroller@getSearchResults');
 Route::post('/profile','Controllers\Usercontroller@profile');
 Route::post('/userpagination','Controllers\Usercontroller@userpagination');
 Route::get('/cat','Controllers\CategoriesController@getcat');
