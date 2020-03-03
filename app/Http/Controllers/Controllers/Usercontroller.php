@@ -72,7 +72,7 @@ class Usercontroller extends Controller
     }
     public function getSearchResults(Request $request)
     { $data = $request->get('data');
-        $search_drivers = User::where('id', 'like', "%{$data}%")
+        $search_user = User::where('id', 'like', "%{$data}%")
             ->orWhere('name', 'like', "%{$data}%")
             ->orWhere('email', 'like', "%{$data}%")
             ->orWhere('description', 'like', "%{$data}%")
@@ -81,7 +81,7 @@ class Usercontroller extends Controller
             ->orWhere('instagram', 'like', "%{$data}%")
             ->orWhere('twitter', 'like', "%{$data}%")
             ->orWhere('phone', 'like', "%{$data}%") ->get();
-        return response()->json([ 'data' => $search_drivers ]); }
+        return response()->json([ 'data' => $search_user ]); }
 
 
 }
