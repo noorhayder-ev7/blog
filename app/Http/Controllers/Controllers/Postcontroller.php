@@ -128,6 +128,26 @@ class Postcontroller extends Controller
 
 
     }
+    public function updatepost(Request $request)
+    {
+
+        $body = $request->all();
+        $id= $body['id'];
+
+                $data = Post::where('id', $id)->update([
+                    'title' => $body['title'],
+                    'content' => $body['content'],
+                    'category_id'=>$body['category_id'],
+                    'image'=>$body['image']
+                    ]);
+                if ($data)
+                    return response()->json(['message' => 'update DONE']);
+
+                else
+                    return response()->json(['message' => 'NOT FOUND']);
+    }
+
+
 
 }
 

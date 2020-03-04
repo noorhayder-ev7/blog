@@ -81,7 +81,33 @@ class Usercontroller extends Controller
             ->orWhere('instagram', 'like', "%{$data}%")
             ->orWhere('twitter', 'like', "%{$data}%")
             ->orWhere('phone', 'like', "%{$data}%") ->get();
-        return response()->json([ 'data' => $search_user ]); }
+
+            return response()->json([ 'data' => $search_user ]);
+
+
+
+
+
+    }
+    public function updateprofile(Request $request)
+    {
+
+        $body = $request->all();
+        $id= $body['id'];
+
+        $data = User::where('id', $id)->update([
+            'name' => $body['name'],
+            'picture' => $body['picture'],
+            'email'=>$body['email'],
+            'password'=>$body['password']
+        ]);
+        if ($data)
+            return response()->json(['message' => 'update DONE']);
+
+        else
+            return response()->json(['message' => 'NOT FOUND']);
+    }
+
 
 
 }
