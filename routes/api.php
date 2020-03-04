@@ -18,11 +18,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::post('/registerusers','Controllers\Usercontroller@register');
 Route::post('/loginuser','Controllers\Usercontroller@login');
+Route::post('/updateprofile','Controllers\Usercontroller@updateprofile');
 Route::post('/getSearchResults','Controllers\Usercontroller@getSearchResults');
 Route::post('/profile','Controllers\Usercontroller@profile');
 Route::post('/userpagination','Controllers\Usercontroller@userpagination');
 Route::get('/cat','Controllers\CategoriesController@getcat');
 Route::post('/posttpagination','Controllers\Postcontroller@index');
+Route::post('/updatepost','Controllers\Postcontroller@updatepost');
 Route::post('/PosttPaginationByUserId','Controllers\Postcontroller@postpagination');
 Route::post('/commentpagination','Controllers\CommentsController@commentpagination');
 Route::post('/addposts','Controllers\Postcontroller@addposts');
