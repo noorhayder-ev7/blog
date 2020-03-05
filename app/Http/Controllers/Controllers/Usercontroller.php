@@ -28,25 +28,37 @@ class Usercontroller extends Controller
                 return response()->json(['message' => 'ERROR']);
 
     }
-//    public function registerbyfacebook(Request $request)
-//    {   $users = new User();
-//        $id = $request->get('id');
-//        $users = User::where('id', 'like', "%{$id}%");
-//          return response()->json(['message' => 'already there'])
-//
-////        $users->id = $request->input('id');
-//        else {
-//            $users->name = $request->input('name');
-////        $users->picture = $request->input('picture');
-//            $users->save();
-//
-//            if ($users) {
-//
-//                return response()->json($users);
-//            } else
-//                return response()->json(['message' => 'ERROR']);
-//        }
-//    }
+    public function registerbyfacebook(Request $request)
+    {
+       $body = $request->all();
+       $id = $body['id'];
+       $u = User::find($id);
+        if ($u)
+        {
+            return response()->json(['message'=> 'already']);
+
+        }
+        else {
+            $data=new User;
+            $temp=$data->id = $request->input('id');
+            $data->name = $request->input('name');
+            if ($request->hasFile('input_img'))//read and store img.
+        {
+            $image = $request->file('input_img');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            $data->picture = $name;
+            $data->save();
+            $data->id =$temp;
+            return response()->json($data);
+
+        }
+            $data->save();
+            $data->id =$temp;
+            return response()->json($data);
+        }
+    }
     public function login(Request $request){
 
         $body = $request->all();
