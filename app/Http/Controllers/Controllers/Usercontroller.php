@@ -28,6 +28,25 @@ class Usercontroller extends Controller
                 return response()->json(['message' => 'ERROR']);
 
     }
+//    public function registerbyfacebook(Request $request)
+//    {   $users = new User();
+//        $id = $request->get('id');
+//        $users = User::where('id', 'like', "%{$id}%");
+//          return response()->json(['message' => 'already there'])
+//
+////        $users->id = $request->input('id');
+//        else {
+//            $users->name = $request->input('name');
+////        $users->picture = $request->input('picture');
+//            $users->save();
+//
+//            if ($users) {
+//
+//                return response()->json($users);
+//            } else
+//                return response()->json(['message' => 'ERROR']);
+//        }
+//    }
     public function login(Request $request){
 
         $body = $request->all();
@@ -97,9 +116,7 @@ class Usercontroller extends Controller
 
         $data = User::where('id', $id)->update([
             'name' => $body['name'],
-            'picture' => $body['picture'],
-            'email'=>$body['email'],
-            'password'=>$body['password']
+            'picture' => $body['picture']
         ]);
         if ($data)
             return response()->json(['message' => 'update DONE']);
