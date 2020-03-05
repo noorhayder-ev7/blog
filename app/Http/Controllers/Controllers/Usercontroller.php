@@ -35,25 +35,26 @@ class Usercontroller extends Controller
        $u = User::find($id);
         if ($u)
         {
-            return response()->json(['message'=> 'already']);
+            return response()->json(['message'=> 'already...']);
 
         }
         else {
             $data=new User;
             $temp=$data->id = $request->input('id');
             $data->name = $request->input('name');
-            if ($request->hasFile('input_img'))//read and store img.
-        {
-            $image = $request->file('input_img');
-            $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
-            $image->move($destinationPath, $name);
-            $data->picture = $name;
-            $data->save();
-            $data->id =$temp;
-            return response()->json($data);
-
-        }
+            $data->picture = $request->input('picture');
+//            if ($request->hasFile('input_img'))//read and store img.
+//        {
+//            $image = $request->file('input_img');
+//            $name = time().'.'.$image->getClientOriginalExtension();
+//            $destinationPath = public_path('/images');
+//            $image->move($destinationPath, $name);
+//            $data->picture = $name;
+//            $data->save();
+//            $data->id =$temp;
+//            return response()->json($data);
+//
+//        }
             $data->save();
             $data->id =$temp;
             return response()->json($data);
