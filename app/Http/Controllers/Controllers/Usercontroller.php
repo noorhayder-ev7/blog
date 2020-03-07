@@ -106,7 +106,7 @@ class Usercontroller extends Controller
         $id= $body['id'];
 
         $data = User::where('id', $id)->update(['name' => $body['name']]);
-        if ($request->hasFile('input_img'))//read and store img.
+        if ($request->hasFile('picture'))//read and store img.
         {
             $image = $request->file('picture');
             $name = time().'.'.$image->getClientOriginalExtension();
