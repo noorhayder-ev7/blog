@@ -139,46 +139,24 @@ class Postcontroller extends Controller
                     'content' => $body['content'],
                     'category_id'=>$body['category_id']
                     ]);
+        if ($request->hasFile('image'))//read and store img.
+        {
+            $image = $request->file('image');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            $data = Post::where('id', $id)->update(['image' => $name]);
+            return response()->json($data);
+//            return back()->with('success','Image Upload successfully');
+
+        }
                 if ($data)
                     return response()->json(['message' => 'update DONE']);
 
                 else
                     return response()->json(['message' => 'NOT FOUND']);
     }
-//    public function updatepost(Request $request)
-//    {
-//        $post = new Post();
-//        $body = $request->all();
-//        $id= $body['id'];
-//
-////        $post->user_id=$request->input('user_id');
-//
-//        $post->title = $request->input('title');
-//        $post->content = $request->input('content');
-//        $post->category_id=$request->input('category_id');
-//        if ($request->hasFile('input_img'))//read and store img.
-//        {
-//            $image = $request->file('input_img');
-//            $name = time().'.'.$image->getClientOriginalExtension();
-//            $destinationPath = public_path('/images');
-//            $image->move($destinationPath, $name);
-//            $post->image = $name;
-//
-//            $post->save();
-//            return response()->json($post);
-////            return back()->with('success','Image Upload successfully');
-//
-//        }
-//        $post->save();
-//        if ($post)
-//        {
-//            return response()->json($post);
-//
-//        }
-//        else
-//            return response()->json(['message'=> 'NOT FOUND']);
-//
-//    }
+
 
 
 

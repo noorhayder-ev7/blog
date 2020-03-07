@@ -43,18 +43,6 @@ class Usercontroller extends Controller
             $temp=$data->id = $request->input('id');
             $data->name = $request->input('name');
             $data->picture = $request->input('picture');
-//            if ($request->hasFile('input_img'))//read and store img.
-//        {
-//            $image = $request->file('input_img');
-//            $name = time().'.'.$image->getClientOriginalExtension();
-//            $destinationPath = public_path('/images');
-//            $image->move($destinationPath, $name);
-//            $data->picture = $name;
-//            $data->save();
-//            $data->id =$temp;
-//            return response()->json($data);
-//
-//        }
             $data->save();
             $data->id =$temp;
             return response()->json($data);
@@ -104,21 +92,11 @@ class Usercontroller extends Controller
     }
     public function getSearchResults(Request $request)
     { $data = $request->get('data');
-        $search_user = User::where('id', 'like', "%{$data}%")
-            ->orWhere('name', 'like', "%{$data}%")
+        $search_user = User::Where('name', 'like', "%{$data}%")
             ->orWhere('email', 'like', "%{$data}%")
-            ->orWhere('description', 'like', "%{$data}%")
-            ->orWhere('picture', 'like', "%{$data}%")
-            ->orWhere('facebook', 'like', "%{$data}%")
-            ->orWhere('instagram', 'like', "%{$data}%")
-            ->orWhere('twitter', 'like', "%{$data}%")
-            ->orWhere('phone', 'like', "%{$data}%") ->get();
-
+            ->orWhere('phone', 'like', "%{$data}%")
+            ->get();
             return response()->json([ 'data' => $search_user ]);
-
-
-
-
 
     }
     public function updateprofile(Request $request)
@@ -127,17 +105,22 @@ class Usercontroller extends Controller
         $body = $request->all();
         $id= $body['id'];
 
-        $data = User::where('id', $id)->update([
-            'name' => $body['name'],
-            'picture' => $body['picture']
-        ]);
+        $data = User::where('id', $id)->update(['name' => $body['name']]);
+        if ($request->hasFile('input_img'))//read and store img.
+        {
+            $image = $request->file('picture');
+            $name = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $name);
+            $data = User::where('id', $id)->update(['picture' => $name]);
+            return response()->json($data);
+
+        }
         if ($data)
             return response()->json(['message' => 'update DONE']);
 
         else
             return response()->json(['message' => 'NOT FOUND']);
     }
-
-
 
 }
