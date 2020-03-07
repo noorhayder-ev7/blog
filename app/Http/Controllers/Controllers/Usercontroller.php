@@ -112,8 +112,9 @@ class Usercontroller extends Controller
             $name = time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
             $image->move($destinationPath, $name);
-            $data = User::where('id', $id)->update(['picture' => $name]);
-            return response()->json($data);
+            $data = User::where('id', $id)->update(['picture' => $destinationPath.$name]);
+            return response()->json(['message' => 'update DONE']);
+
 
         }
         if ($data)
