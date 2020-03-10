@@ -143,7 +143,8 @@ class Postcontroller extends Controller
             'category_id'=>$body['category_id']
                     ]);
         if ($request->input('tags'))
-            $data->tags = $request->input('tags');
+
+           $data = Post::where('id', $id)->update(['tags' => $request->input('tags')]);
         if ($request->hasFile('image'))//read and store img.
         {
             $image = $request->file('image');
@@ -156,6 +157,7 @@ class Postcontroller extends Controller
 
         }
                 if ($data)
+
                     return response()->json(['message' => 'update DONE']);
 
                 else
