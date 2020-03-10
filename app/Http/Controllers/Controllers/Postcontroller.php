@@ -72,7 +72,10 @@ class Postcontroller extends Controller
         $post->created_at = $mydate;
         $post->rate="0";
         $post->views="0";
-        $post->tags="NULL";
+        if ($request->input('tags'))
+            $post->tags = $request->input('tags');
+        else
+            $post->tags="NULL";
         $post->status="0";
         $post->category_id=$request->input('category_id');
         if ($request->hasFile('input_img'))//read and store img.
@@ -134,11 +137,13 @@ class Postcontroller extends Controller
         $body = $request->all();
         $id= $body['id'];
 
-                $data = Post::where('id', $id)->update([
-                    'title' => $body['title'],
-                    'content' => $body['content'],
-                    'category_id'=>$body['category_id']
+        $data = Post::where('id', $id)->update([
+            'title' => $body['title'],
+            'content' => $body['content'],
+            'category_id'=>$body['category_id']
                     ]);
+        if ($request->input('tags'))
+            $data->tags = $request->input('tags');
         if ($request->hasFile('image'))//read and store img.
         {
             $image = $request->file('image');
