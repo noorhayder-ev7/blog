@@ -143,7 +143,6 @@ class Postcontroller extends Controller
             'category_id'=>$body['category_id']
                     ]);
         if ($request->input('tags'))
-
            $data = Post::where('id', $id)->update(['tags' => $request->input('tags')]);
         if ($request->hasFile('image'))//read and store img.
         {
@@ -152,8 +151,9 @@ class Postcontroller extends Controller
             $destinationPath = public_path('/images');
             $image->move($destinationPath, $name);
             $data = Post::where('id', $id)->update(['image' => $name]);
-            return response()->json($data);
+//            return response()->json($data);
 //            return back()->with('success','Image Upload successfully');
+              return response()->json(['message' => 'update DONE']);
 
         }
                 if ($data)
