@@ -16,7 +16,7 @@ class Usercontroller extends Controller
             $users->id = $random_id;
             $users->name = $request->input('name');
             $users->email = $request->input('email');
-            $users->password = $request->input('password');
+            $users->password = md5($request->input('password'));
            $users->save();
 
             if ($users)
@@ -53,7 +53,7 @@ class Usercontroller extends Controller
         $body = $request->all();
        $password = $body['password'];
         $username=$body['email'];
-       $data = User::where('email',$username)->where('password', $password )->first();
+       $data = User::where('email',$username)->where('password', md5($password ))->first();
         if ($data)
         {
             return response()->json($data);
