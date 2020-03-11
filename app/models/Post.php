@@ -10,7 +10,7 @@ class Post extends Model
     public $timestamps = false;
     public function user()
     {
-        return $this->belongsTo('App\models\User')->select(['id', 'name','picture']);
+        return $this->belongsTo('App\models\User')->select(['id', 'name', 'picture']);
 
     }
     public function cat()
@@ -18,5 +18,10 @@ class Post extends Model
         return $this->belongsTo('App\models\Category', 'category_id');
     }
 
+    public function cmd()
+    {
+        return $this->hasMany('App\models\Comments')->select(['id','content']);
+
+    }
 
 }

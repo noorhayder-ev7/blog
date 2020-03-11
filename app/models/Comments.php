@@ -13,4 +13,8 @@ class Comments extends Model
         return $this->belongsTo('App\models\User')->select(['id','name', 'email']);
 
     }
+    public function comment()
+    {
+        return $this->belongsTo('App\models\Post');
+    }
 }
