@@ -5,14 +5,25 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use \App\models\Post;
+use App\models\Comments;
 class Postcontroller extends Controller
 {
     public function postpagination(Request $request)
     {
         $body = $request->all();
         $id= $body['user_id'];
-        $data= Post::with(['user','cat'])->where('user_id', $id)->latest()->paginate(10);
+        $data= Post::where('user_id',$id)
+            ->with(['user','cat'])
+            ->withCount('cmd')->latest()->paginate(10);
 
+
+
+
+
+
+
+
+        
         return response()->json($data);
     }
     public function index(Request $request)   //get posts depend on sort by
