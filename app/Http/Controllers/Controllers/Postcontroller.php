@@ -16,14 +16,6 @@ class Postcontroller extends Controller
             ->with(['user','cat'])
             ->withCount('cmd')->latest()->paginate(10);
 
-
-
-
-
-
-
-
-        
         return response()->json($data);
     }
     public function index(Request $request)   //get posts depend on sort by
@@ -34,16 +26,17 @@ class Postcontroller extends Controller
 
             if ($sortby == 0)// get all posts by default
             {
-                $data = Post::with(['user', 'cat'])->paginate(10);
+                $data = Post::with(['user', 'cat'])->withCount('cmd')->paginate(10);
                 return response()->json($data);
             } elseif ($sortby == 1)//get posts depend on views
             {
-                $data = Post::with(['user', 'cat'])->orderBy('views', 'desc')->paginate(10);
+                $data = Post::with(['user', 'cat'])->orderBy('views', 'desc')
+                    ->withCount('cmd')->paginate(10);
                 return response()->json($data);
 
             } elseif ($sortby == 2)//get posts depend on recent post
             {
-                $data = Post::with(['user', 'cat'])->latest()->paginate(10);
+                $data = Post::with(['user', 'cat'])->withCount('cmd')->latest()->paginate(10);
                 return response()->json($data);
 
             }
@@ -53,19 +46,20 @@ class Postcontroller extends Controller
             $id= $body['category_id'];
             if ($sortby == 0)// get all posts by default
             {
-                $data = Post::with(['user', 'cat'])->paginate(10);
+                $data = Post::with(['user', 'cat'])->withCount('cmd')->paginate(10);
                 return response()->json($data);
             }
 
             elseif ($sortby == 1)//get posts depend on views
             {
-                $data = Post::with(['user', 'cat'])->where('category_id',$id)->orderBy('views', 'desc')->paginate(10);
+                $data = Post::with(['user', 'cat'])->where('category_id',$id)
+                    ->orderBy('views', 'desc')->withCount('cmd')->paginate(10);
                 return response()->json($data);
 
             }
             elseif ($sortby == 2)//get posts depend on recent post
             {
-                $data = Post::with(['user', 'cat'])->where('category_id',$id)->latest()->paginate(10);
+                $data = Post::with(['user', 'cat'])->where('category_id',$id)->withCount('cmd')->latest()->paginate(10);
                 return response()->json($data);
 
             }
