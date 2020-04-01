@@ -57,27 +57,27 @@ class Usercontroller extends Controller
        $username=$body['email'];
         if ($request->input('db'))
     {
-        $u = User::where('email', $username)->where('password', ($password))->first();
-        $u2 = Student::where('email', $username)->where('password', ($password))->first();
+        $u = User::where('email', $username)->where('password', md5($password))->first();
+        $u2 = Student::where('email', $username)->where('password', md5($password))->first();
 
         if ($u) {
-            $data = User::where('email', $username)->where('password', ($password))->first();
+            $data = User::where('email', $username)->where('password', md5($password))->first();
             return response()->json($data);
         }
 
         elseif ($u2)
 
         {
-            $u2 = Student::where('email', $username)->where('password', ($password))->first(['name','email','password']);
+            $u2 = Student::where('email', $username)->where('password', md5($password))->first(['name','email','password']);
             $users  = new User();
             $random_id = rand(1000000,9999999);
             $users->id = $random_id;
             $users->name=$u2['name'];
             $users->email=$u2['email'];
-            $users->password=($u2['password']);
+            $users->password=md5($u2['password']);
             $users->save();
             $users->id = $random_id;
-            return response()->json($u2);
+            return response()->json($users);
 
         }
         else
