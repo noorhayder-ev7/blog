@@ -74,7 +74,7 @@ class Usercontroller extends Controller
             $users->id = $random_id;
             $users->name=$u2['name'];
             $users->email=$u2['email'];
-            $users->password=md5($u2['password']);
+            $users->password=$u2['password'];
             $users->save();
             $users->id = $random_id;
             return response()->json($users);
