@@ -77,7 +77,8 @@ class Usercontroller extends Controller
             $users->password=$u2['password'];
             $users->save();
             $users->id = $random_id;
-            return response()->json($users);
+            $data = User::where('email', $username)->where('password', md5($password))->first();
+            return response()->json($data);
 
         }
         else
