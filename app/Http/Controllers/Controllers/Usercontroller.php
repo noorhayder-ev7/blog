@@ -68,7 +68,10 @@ class Usercontroller extends Controller
 
         if ($userFromDB1) {
             $data = User::where('email', $username)->where('password', md5($password))->first();
-            return response()->json($data);
+            if($data)
+              return response()->json($data);
+            else
+                return response()->json(['message'=> 'NOT FOUND']);
         }
 
         elseif ($userFromDB2)
