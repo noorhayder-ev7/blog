@@ -58,7 +58,7 @@ class Usercontroller extends Controller
         if ($request->input('db'))
     {
         $u = User::where('email', $username)->where('password', md5($password))->first();
-        $u2 = Student::where('email', $username)->where('password', md5($password))->first();
+        $u2 = Student::where('email', $username)->first();
 
         if ($u) {
             $data = User::where('email', $username)->where('password', md5($password))->first();
@@ -66,21 +66,54 @@ class Usercontroller extends Controller
         }
 
         elseif ($u2)
-
-        {
-            $u2 = Student::where('email', $username)->where('password', md5($password))->first(['name','email','password']);
-            $users  = new User();
-            $random_id = rand(1000000,9999999);
+        { $userface = User::where('email', $username)->whereNotNull('password')->first();
+          $u2 =  User::where('email', $username)->first();
+            if($userface==null&&$u2)
+            {$us=User::where('email', $username)->first();
+                $u2 = Student::where('email', $username)->where('password', md5($password))->first(['password']);
+                $us->password=$u2['password'];
+                $us->save();
+                $data = User::where('email', $username)->where('password', md5($password))->first();
+                return response()->json($data);
+            }
+            else{
+            $u2 = Student::where('email', $username)->where('password', md5($password))->first(['name', 'email', 'password']);
+            $users = new User();
+            $random_id = rand(1000000, 9999999);
             $users->id = $random_id;
-            $users->name=$u2['name'];
-            $users->email=$u2['email'];
-            $users->password=$u2['password'];
+            $users->name = $u2['name'];
+            $users->email = $u2['email'];
+            $users->password = $u2['password'];
             $users->save();
             $users->id = $random_id;
             $data = User::where('email', $username)->where('password', md5($password))->first();
             return response()->json($data);
-
         }
+        }
+
+//        { $userface = User::where('email', $username)->whereNotNull('password')->first();
+//          if($userface){
+//              $u2 = Student::where('email', $username)->where('password', md5($password))->first(['name', 'email', 'password']);
+//              $users = new User();
+//              $random_id = rand(1000000, 9999999);
+//              $users->id = $random_id;
+//              $users->name = $u2['name'];
+//              $users->email = $u2['email'];
+//              $users->password = $u2['password'];
+//              $users->save();
+//              $users->id = $random_id;
+//              $data = User::where('email', $username)->where('password', md5($password))->first();
+//              return response()->json($data);
+//          }
+//          else
+//            {$us=User::where('email', $username)->first();
+//                $u2 = Student::where('email', $username)->where('password', md5($password))->first(['password']);
+//                $us->password=$u2['password'];
+//                $us->save();
+//                $data = User::where('email', $username)->where('password', md5($password))->first();
+//                return response()->json($data);
+//            }
+//        }
         else
             return response()->json(['message'=> 'NOT FOUND']);
 
