@@ -19,16 +19,18 @@ class Usercontroller extends Controller
             $users->name = $request->input('name');
             $users->email = $request->input('email');
             $users->password = md5($request->input('password'));
-           $users->save();
+            $body=User::where('email',$users->email)->first();
+        if($body)
+            return response()->json(['message'=> 'email exists']);
+        else {
+            $users->save();
 
-            if ($users)
-            {
+            if ($users) {
                 $users->id = $random_id;
                 return response()->json($users);
-            }
-            else
+            } else
                 return response()->json(['message' => 'ERROR']);
-
+        }
     }
     public function registerbyfacebook(Request $request)
     {
