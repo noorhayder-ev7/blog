@@ -9,7 +9,7 @@ class CategoriesController extends Controller
 {
     public function getcat(Request $request)
     {
-        $data= (new \App\models\categories)->all();
+        $data= (new \App\models\Category)->all();
         return response()->json($data);
 
 
