@@ -17,6 +17,10 @@ class Postcontroller extends Controller
             ->withCount('cmd')->latest()->paginate(10);
 
         return response()->json($data);
+
+
+
+
     }
     public function index(Request $request)   //get posts depend on sort by
     {
@@ -85,9 +89,9 @@ class Postcontroller extends Controller
         $post->category_id=$request->input('category_id');
         if ($request->hasFile('input_img'))//read and store img.
         {
-            $image = $request->file('input_img');
+            $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
+            $destinationPath = public_path('/public_html/aqlam/aqlam/image');
             $image->move($destinationPath, $name);
             $post->image = $name;
 
