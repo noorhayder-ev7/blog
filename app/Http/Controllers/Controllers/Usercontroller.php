@@ -21,7 +21,7 @@ class Usercontroller extends Controller
             $users->password = md5($request->input('password'));
             $body=User::where('email',$users->email)->first();
         if($body)
-            return response()->json(['message'=> 'email exists']);
+            return response()->json(['message'=> 'email exists..!']);
         else {
             $users->save();
 
@@ -47,11 +47,12 @@ class Usercontroller extends Controller
             $temp=$data->id = $request->input('id');
             $data->name = $request->input('name');
             $data->email = $request->input('email');
+            $data->picture = $request->input('picture');
             $body=User::where('email',$data->email)->first();
             if($body)
-                return response()->json(['message'=> 'email exists']);
+                return response()->json(['message'=> 'email exists..!']);
             else
-                {$data->picture = $request->input('picture');
+                {
                 $data->save();
                 $data->id =$temp;
                 return response()->json($data);}
@@ -166,9 +167,9 @@ class Usercontroller extends Controller
         $data = User::where('id', $id)->update(['name' => $body['name']]);
         if ($request->hasFile('picture'))//read and store img.
         {
-            $image = $request->file('picture');
+            $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('images');
+            $destinationPath = public_path('/public_html/aqlam/aqlam/image');
             $image->move($destinationPath, $name);
             $data = User::where('id', $id)->update(['picture' => $destinationPath.$name]);
             return response()->json(['message' => 'update DONE']);
