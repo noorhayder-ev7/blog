@@ -27,6 +27,7 @@ Route::get('/cat','Controllers\CategoriesController@getcat');
 Route::post('/posttpagination','Controllers\Postcontroller@index');
 Route::post('/updatepost','Controllers\Postcontroller@updatepost');
 Route::post('/PosttPaginationByUserId','Controllers\Postcontroller@postpagination');
+Route::post('/postById','Controllers\Postcontroller@postById');
 Route::post('/commentpagination','Controllers\CommentsController@commentpagination');
 Route::post('/addposts','Controllers\Postcontroller@addposts');
 Route::post('/addcomment','Controllers\CommentsController@addcomment');
