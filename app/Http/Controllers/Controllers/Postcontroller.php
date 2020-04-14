@@ -12,13 +12,26 @@ class Postcontroller extends Controller
     {
         $body = $request->all();
         $id= $body['user_id'];
-        $data= Post::where('user_id',$id)
+        $data= Post::where('user_id',$id)->where('status',$st=1)
             ->with(['user','cat'])
             ->withCount('cmd')->latest()->paginate(10);
 
         return response()->json($data);
+//        $page = $_GET['page'];
+//        $data= Post::paginate(5, ['*'], 'page', $page);
+//        return response($data);
 
+    }
+    public function postById(Request $request)
+    {
+//          $st=1;
+        $body = $request->all();
+        $id= $body['id'];
+        $data= Post::where('id',$id)
+            ->with(['user','cat'])
+            ->withCount('cmd')->first();
 
+        return response()->json($data);
 
 
     }
@@ -30,17 +43,26 @@ class Postcontroller extends Controller
 
             if ($sortby == 0)// get all posts by default
             {
-                $data = Post::with(['user', 'cat'])->withCount('cmd')->paginate(10);
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                withCount('cmd')->
+                paginate(10);
                 return response()->json($data);
             } elseif ($sortby == 1)//get posts depend on views
             {
-                $data = Post::with(['user', 'cat'])->orderBy('views', 'desc')
-                    ->withCount('cmd')->paginate(10);
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                orderBy('views', 'desc')
+                    ->withCount('cmd')->
+                    paginate(10);
                 return response()->json($data);
 
             } elseif ($sortby == 2)//get posts depend on recent post
             {
-                $data = Post::with(['user', 'cat'])->withCount('cmd')->latest()->paginate(10);
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                withCount('cmd')->
+                latest()->paginate(10);
                 return response()->json($data);
 
             }
@@ -50,20 +72,30 @@ class Postcontroller extends Controller
             $id= $body['category_id'];
             if ($sortby == 0)// get all posts by default
             {
-                $data = Post::with(['user', 'cat'])->withCount('cmd')->paginate(10);
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                withCount('cmd')->paginate(10);
                 return response()->json($data);
             }
 
             elseif ($sortby == 1)//get posts depend on views
             {
-                $data = Post::with(['user', 'cat'])->where('category_id',$id)
-                    ->orderBy('views', 'desc')->withCount('cmd')->paginate(10);
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                where('category_id',$id)->
+                orderBy('views', 'desc')->
+                withCount('cmd')->
+                paginate(10);
                 return response()->json($data);
 
             }
             elseif ($sortby == 2)//get posts depend on recent post
             {
-                $data = Post::with(['user', 'cat'])->where('category_id',$id)->withCount('cmd')->latest()->paginate(10);
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                where('category_id',$id)->
+                withCount('cmd')->
+                latest()->paginate(10);
                 return response()->json($data);
 
             }
