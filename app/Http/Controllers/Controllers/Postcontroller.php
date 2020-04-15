@@ -12,14 +12,12 @@ class Postcontroller extends Controller
     {
         $body = $request->all();
         $id= $body['user_id'];
-        $data= Post::where('user_id',$id)->where('status',$st=1)
+        $data= Post::where('user_id',$id)
             ->with(['user','cat'])
             ->withCount('cmd')->latest()->paginate(10);
 
         return response()->json($data);
-//        $page = $_GET['page'];
-//        $data= Post::paginate(5, ['*'], 'page', $page);
-//        return response($data);
+
 
     }
     public function postById(Request $request)
