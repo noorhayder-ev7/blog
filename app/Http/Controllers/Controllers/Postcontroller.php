@@ -17,7 +17,9 @@ class Postcontroller extends Controller
             ->withCount('cmd')->latest()->paginate(10);
 
         return response()->json($data);
-
+//        $page = $_GET['page'];
+//        $data= Post::paginate(5, ['*'], 'page', $page);
+//        return response($data);
 
     }
     public function postById(Request $request)
@@ -202,7 +204,15 @@ class Postcontroller extends Controller
                 else
                     return response()->json(['message' => 'NOT FOUND']);
     }
+    public function getSearchResults(Request $request)
+    { $data = $request->get('data');
+        $search_post = Post::Where('title', 'like', "%{$data}%")
+            ->orWhere('content', 'like', "%{$data}%")
+            ->orWhere('tags', 'like', "%{$data}%")
+            ->get();
+        return response()->json([ 'data' => $search_post ]);
 
+    }
 
 
 
