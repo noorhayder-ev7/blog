@@ -17,9 +17,7 @@ class Postcontroller extends Controller
             ->withCount('cmd')->latest()->paginate(10);
 
         return response()->json($data);
-//        $page = $_GET['page'];
-//        $data= Post::paginate(5, ['*'], 'page', $page);
-//        return response($data);
+
 
     }
     public function postById(Request $request)
