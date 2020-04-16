@@ -207,7 +207,7 @@ class Postcontroller extends Controller
         $search_post = Post::Where('title', 'like', "%{$data}%")
             ->orWhere('content', 'like', "%{$data}%")
             ->orWhere('tags', 'like', "%{$data}%")
-            ->get();
+            ->paginate(10);
         return response()->json([ 'data' => $search_post ]);
 
     }
