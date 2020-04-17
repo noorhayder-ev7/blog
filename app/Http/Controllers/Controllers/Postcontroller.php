@@ -117,7 +117,7 @@ class Postcontroller extends Controller
             $post->tags="NULL";
         $post->status="0";
         $post->category_id=$request->input('category_id');
-        if ($request->hasFile('input_img'))//read and store img.
+        if ($request->hasFile('image'))//read and store img.
         {
             $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
@@ -187,7 +187,7 @@ class Postcontroller extends Controller
         {
             $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/images');
+            $destinationPath = public_path('/public_html/aqlam/aqlam/image');
             $image->move($destinationPath, $name);
             $data = Post::where('id', $id)->update(['image' => $name]);
 //            return response()->json($data);
@@ -204,12 +204,15 @@ class Postcontroller extends Controller
     }
     public function getSearchResults(Request $request)
     { $data = $request->get('data');
-        $search_post = Post::Where('title', 'like', "%{$data}%")
+
+        {$search_post = Post::Where('title', 'like', "%{$data}%")
             ->orWhere('content', 'like', "%{$data}%")
             ->orWhere('tags', 'like', "%{$data}%")
             ->with(['user','cat'])
-            ->withCount('cmd')->paginate(10);
-        return response()->json([ 'data' => $search_post ]);
+            ->withCount('cmd')->where('status',$st=1)->paginate(5);
+
+
+            return response()->json([ 'data' => $search_post ]); }
 
     }
 
