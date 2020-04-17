@@ -210,8 +210,8 @@ class Postcontroller extends Controller
             ->orWhere('content', 'like', "%{$data}%")
             ->with(['user','cat'])
             ->withCount('cmd')
-           ->where('status',1)
             ->paginate(10);
+        $search_post=$search_post->where('status',1);
               return response()->json($search_post);
 
     }
