@@ -206,6 +206,7 @@ class Postcontroller extends Controller
     { $data = $request->get('data');
 
         $search_post = Post::Where('title', 'like', "%{$data}%")
+           
             ->with(['user','cat'])
             ->withCount('cmd')->where('status',$st=1)->paginate(5);
           if($search_post)
@@ -213,7 +214,7 @@ class Postcontroller extends Controller
           else
           {
               $search_post1 = Post::Where('content', 'like', "%{$data}%")
-                   ->orWhere('tags', 'like', "%{$data}%")
+                   ->orWhere('tags', 'like', "%{$data}%")->orWhere('content', 'like', "%{$data}%")
                   ->with(['user','cat'])
                   ->withCount('cmd')->where('status',$st=1)->paginate(5);
               return response()->json([ 'data' => $search_post1 ]);
