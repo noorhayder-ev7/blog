@@ -205,14 +205,19 @@ class Postcontroller extends Controller
     public function getSearchResults(Request $request)
     { $data = $request->get('data');
 
-        {$search_post = Post::Where('title', 'like', "%{$data}%")
-            ->orWhere('content', 'like', "%{$data}%")
-            ->orWhere('tags', 'like', "%{$data}%")
+        $search_post = Post::Where('title', 'like', "%{$data}%")
             ->with(['user','cat'])
             ->withCount('cmd')->where('status',$st=1)->paginate(5);
-
-
-            return response()->json([ 'data' => $search_post ]); }
+          if($search_post)
+              return response()->json([ 'data' => $search_post ]);
+          else
+          {
+              $search_post1 = Post::Where('content', 'like', "%{$data}%")
+                   ->orWhere('tags', 'like', "%{$data}%")
+                  ->with(['user','cat'])
+                  ->withCount('cmd')->where('status',$st=1)->paginate(5);
+              return response()->json([ 'data' => $search_post1 ]);
+          }
 
     }
 
