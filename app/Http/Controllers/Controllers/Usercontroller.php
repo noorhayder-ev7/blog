@@ -21,7 +21,7 @@ class Usercontroller extends Controller
             $users->password = md5($request->input('password'));
             $body=User::where('email',$users->email)->first();
         if($body)
-            return response()->json(['message'=> 'email exists..!']);
+            return response()->json(['message'=> 'email exists']);
         else {
             $users->save();
 
@@ -50,7 +50,7 @@ class Usercontroller extends Controller
             $data->picture = $request->input('picture');
             $body=User::where('email',$data->email)->first();
             if($body)
-                return response()->json(['message'=> 'email exists..!']);
+                return response()->json(['message'=> 'email exists']);
             else
                 {
                 $data->save();
