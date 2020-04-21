@@ -20,6 +20,7 @@ Route::post('/registerusers','Controllers\Usercontroller@register');
 Route::post('/registerbyfacebook','Controllers\Usercontroller@registerbyfacebook');
 Route::post('/loginuser','Controllers\Usercontroller@login');
 Route::post('/updateprofile','Controllers\Usercontroller@updateprofile');
+Route::post('/saveToken','Controllers\Usercontroller@saveToken');
 Route::post('/getSearchResults','Controllers\Usercontroller@getSearchResults');
 Route::post('/profile','Controllers\Usercontroller@profile');
 Route::post('/userpagination','Controllers\Usercontroller@userpagination');
