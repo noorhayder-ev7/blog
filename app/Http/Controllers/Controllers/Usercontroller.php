@@ -183,4 +183,20 @@ class Usercontroller extends Controller
             return response()->json(['message' => 'NOT FOUND']);
     }
 
+
+public function saveToken(Request $request)
+{
+
+    $body = $request->all();
+    $id= $body['id'];
+
+    $data = User::where('id', $id)->update(['token' => $body['token']]);
+
+    if ($data)
+        return response()->json(['message' => 'update DONE']);
+
+    else
+        return response()->json(['message' => 'NOT FOUND']);
+}
+
 }
