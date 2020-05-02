@@ -54,9 +54,11 @@ class Usercontroller extends Controller
             if($body)
             {   $Id=$body['id'];
                 $body=User::where('email',$data->email)->
-                update(['id'=>$temp],['picture'=>$data->picture]);
-                $body0=User::where('email',$data->email)->
+                update(['id'=>$temp]);
+                $body=User::where('email',$data->email)->
                 update(['name'=>$data->name]);
+                $body=User::where('email',$data->email)->
+                update(['picture'=>$data->picture]);
                 $body1=Post::where('user_id',$Id)->update(['user_id'=>$temp]);
                 $body2=Comments::where('user_id',$Id)->update(['user_id'=>$temp]);
                 $body3=Rates::where('user_id',$Id)->update(['user_id'=>$temp]);
