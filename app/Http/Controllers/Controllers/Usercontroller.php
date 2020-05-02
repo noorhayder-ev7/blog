@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Controllers;
 
+use App\models\Comments;
+use App\models\Post;
+use App\models\Rates;
 use App\models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -24,7 +27,6 @@ class Usercontroller extends Controller
             return response()->json(['message'=> 'email exists']);
         else {
             $users->save();
-
             if ($users) {
                 $users->id = $random_id;
                 return response()->json($users);
@@ -50,7 +52,16 @@ class Usercontroller extends Controller
             $data->picture = $request->input('picture');
             $body=User::where('email',$data->email)->first();
             if($body)
-                return response()->json(['message'=> 'email exists']);
+            {   $Id=$body['id'];
+                $body=User::where('email',$data->email)->
+                update(['id'=>$temp],['picture'=>$data->picture]);
+                $body0=User::where('email',$data->email)->
+                update(['name'=>$data->name]);
+                $body1=Post::where('user_id',$Id)->update(['user_id'=>$temp]);
+                $body2=Comments::where('user_id',$Id)->update(['user_id'=>$temp]);
+                $body3=Rates::where('user_id',$Id)->update(['user_id'=>$temp]);
+                $body=User::where('email',$data->email)->first();
+                return response()->json($body);}
             else
                 {
                 $data->save();
