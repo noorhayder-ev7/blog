@@ -105,49 +105,50 @@ class Postcontroller extends Controller
     }
     public function addposts(Request $request)
     {
-//        $post = new Post();
-//       $id= $post->user_id=$request->input('user_id');
-//        $temp=User::find($id);
-//        if($temp){$post->title = $request->input('title');
-//            $post->content = $request->input('content');
-//            $mydate = Carbon::now();
-//            $mydate->toDateTimeString();
-//            $post->created_at = $mydate;
-//            $post->rate="0";
-//            $post->views="0";
-//            if ($request->input('tags'))
-//                $post->tags = $request->input('tags');
-//            else
-//                $post->tags="NULL";
-//            $post->status="0";
-//            $post->category_id=$request->input('category_id');
-//            if ($request->hasFile('image'))//read and store img.
-//            {
-//                $image = $request->file('image');
-//                $name = time().'.'.$image->getClientOriginalExtension();
-//                $destinationPath = public_path('/public_html/aqlam/aqlam/image');
-//                $image->move($destinationPath, $name);
-//                $post->image = $name;
-//
-//                $post->save();
-//                return response()->json($post);
-////            return back()->with('success','Image Upload successfully');
-//
-//            }
-//            $post->save();
-//            if ($post)
-//            {
-//                return response()->json($post);
-//
-//            }
-//            else
-//                return response()->json(['message'=> 'NOT FOUND']);
-//        }
-//        else
-//            return response()->json(['message'=> ' user not found']);
+        $post = new Post();
+       $id= $post->user_id=$request->input('user_id');
+        $temp=User::find($id);
+        if($temp){
+            $post->title = $request->input('title');
+            $post->content = $request->input('content');
+            $mydate = Carbon::now();
+            $mydate->toDateTimeString();
+            $post->created_at = $mydate;
+            $post->rate="0";
+            $post->views="0";
+            if ($request->input('tags'))
+                $post->tags = $request->input('tags');
+            else
+                $post->tags="NULL";
+            $post->status="0";
+            $post->category_id=$request->input('category_id');
+            if ($request->hasFile('image'))//read and store img.
+            {
+                $image = $request->file('image');
+                $name = time().'.'.$image->getClientOriginalExtension();
+                $destinationPath = public_path('/public_html/aqlam/aqlam/image');
+                $image->move($destinationPath, $name);
+                $post->image = $name;
+
+                $post->save();
+                return response()->json($post);
+//            return back()->with('success','Image Upload successfully');
+
+            }
+            $post->save();
+            if ($post)
+            {
+                return response()->json($post);
+
+            }
+            else
+                return response()->json(['message'=> 'NOT FOUND']);
+        }
+        else
+            return response()->json(['message'=> ' user not found']);
 
 
-        return response()->json(['message'=> 'failed']);
+//        return response()->json(['message'=> 'failed']);
 
     }
     public function deletepost(Request $request){

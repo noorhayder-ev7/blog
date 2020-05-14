@@ -16,7 +16,8 @@ class CommentsController extends Controller
         $cmt = new Comments();
        $id= $cmt->user_id=$request->input('user_id');
         $temp=User::find($id);
-        if($temp){  $cmt->post_id=$request->input('post_id');
+        if($temp){
+            $cmt->post_id=$request->input('post_id');
             $cmt->content = $request->input('content');
             $mydate = Carbon::now();
             $mydate->toDateTimeString();
