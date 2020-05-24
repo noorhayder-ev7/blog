@@ -43,14 +43,15 @@ return [
 
     'disks' => [
 
-        'local' => [
-            'driver' => 'local',
-            'root' => storage_path('app'),
-        ],
+//        'fo2' => [
+//            'driver' => 'custom',
+//            'root' => ('https://alkafeelblog.edu.turathalanbiaa.com/public/aqlam/image'),
+//        ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => storage_path('/app/public'),
+
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
