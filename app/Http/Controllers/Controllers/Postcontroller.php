@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use \App\models\Post;
 use App\models\Comments;
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Contracts\Filesystem\Filesystem;
 class Postcontroller extends Controller
 {
     public function postpagination(Request $request)
@@ -122,19 +125,25 @@ class Postcontroller extends Controller
                 $post->tags="NULL";
             $post->status="0";
             $post->category_id=$request->input('category_id');
+
+
+
             if ($request->hasFile('image'))//read and store img.
             {
                 $image = $request->file('image');
                 $name = time().'.'.$image->getClientOriginalExtension();
-                $destinationPath = public_path('/public_html/aqlam/aqlam/image');
+                $destinationPath = 'https://alkafeelblog.edu.turathalanbiaa.com/public/aqlam/image';
                 $image->move($destinationPath, $name);
                 $post->image = $name;
-
                 $post->save();
                 return response()->json($post);
 //            return back()->with('success','Image Upload successfully');
 
             }
+
+
+
+
             $post->save();
             if ($post)
             {
@@ -198,11 +207,10 @@ class Postcontroller extends Controller
         {
             $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = public_path('/public_html/aqlam/aqlam/image');
+            $destinationPath = 'https://alkafeelblog.edu.turathalanbiaa.com/public/aqlam/image';
             $image->move($destinationPath, $name);
             $data = Post::where('id', $id)->update(['image' => $name]);
-//            return response()->json($data);
-//            return back()->with('success','Image Upload successfully');
+
               return response()->json(['message' => 'update DONE']);
 
         }
