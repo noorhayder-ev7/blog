@@ -132,7 +132,7 @@ class Postcontroller extends Controller
             if ($request->hasFile('image')) {
                 $image = $request->file('image');
                 $fileName = time() . "." . $image->getClientOriginalExtension();
-                $location ='../../aqlam/aqlam/image';
+                $location ='../../../aqlam/aqlam/image';
                 $image->move($location, $fileName);
                 $post->image = $fileName;
                 $post->save();
