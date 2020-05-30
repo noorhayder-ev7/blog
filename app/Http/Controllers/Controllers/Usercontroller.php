@@ -182,15 +182,12 @@ class Usercontroller extends Controller
         {
             $image = $request->file('image');
             $name = time().'.'.$image->getClientOriginalExtension();
-            $destinationPath = 'https://alkafeelblog.edu.turathalanbiaa.com/public/aqlam/image';
-            $image->move($destinationPath, $name);
+            $location ='../../aqlam/aqlam/image';
+            $image->move($location, $name);
             $temp= 'https://alkafeelblog.edu.turathalanbiaa.com/public/aqlam/image/';
             $data = User::where('id', $id)->update(['picture' => $temp.$name]);
             return response()->json(['message' => 'update DONE']);
-
-
-
-
+            
 
         }
         if ($data)
