@@ -108,7 +108,6 @@ class Postcontroller extends Controller
         }
         return response()->json(['message'=> 'ERROR']);
     }
-
     public function addposts(Request $request)
     {
         $post = new Post();
