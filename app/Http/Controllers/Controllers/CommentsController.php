@@ -11,6 +11,15 @@ use App\Http\Controllers\Controller;
 
 class CommentsController extends Controller
 {
+<<<<<<< Updated upstream
+=======
+    protected $serverKey;
+
+    public function __construct()
+    {
+        $this->serverKey = config('app.firebase_server_key');
+    }
+>>>>>>> Stashed changes
     public function addcomment(Request $request)
     {
         $cmt = new Comments();
@@ -18,11 +27,16 @@ class CommentsController extends Controller
         $temp=User::find($id);
         if($temp){
             $cmt->post_id=$request->input('post_id');
+<<<<<<< Updated upstream
             $cmt->content = $request->input('content');
+=======
+            $cmd2=$cmt->content = $request->input('content');
+>>>>>>> Stashed changes
             $mydate = Carbon::now();
             $mydate->toDateTimeString();
             $cmt->created_at = $mydate;
             $cmt->save();
+<<<<<<< Updated upstream
             if ($cmt)
             {
                 return response()->json($cmt);
@@ -34,6 +48,72 @@ class CommentsController extends Controller
         else
             return response()->json(['message'=> ' user not found']);
 
+=======
+            $userIdC=Post::where('id',$cmt->post_id)->first();
+            $userIdC=$userIdC->user_id;
+       if($userIdC!=$id){
+           $l=strlen($cmd2);
+           if($l>25)
+               $rest = substr($cmd2, 0, 25);
+           else
+               $rest =$cmd2;
+           if ($cmt)
+           {
+               $u=User::where('id',$id)->first(['name','token']);
+
+               $data = [
+                   "to" =>$u->token,
+                   "notification" =>
+                       [
+
+                           "title" =>' علق ' . $u->name . ' على مدونتك ',
+
+
+                           "body" =>$rest,
+                       ],
+                   "data"=>[
+                       "id"=>$cmt->post_id,
+                   ]
+                   ,
+
+               ];
+               $dataString = json_encode($data);
+               $headers = [
+
+                   'Authorization: key=' . $this->serverKey,
+                   'Content-Type: application/json',
+               ];
+
+               $ch = curl_init();
+
+               curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+               curl_setopt($ch, CURLOPT_POST, true);
+               curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+               curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+               curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+               curl_exec($ch);
+
+               return response()->json($cmt);
+
+           }
+
+
+
+
+
+       }
+       else if ($cmt)
+          return response()->json($cmt);
+       else
+           return response()->json(['message'=> 'NOT FOUND']);
+         }
+
+        else
+            return response()->json(['message'=> ' user not found']);
+
+
+>>>>>>> Stashed changes
     }
     public function deletecomment(Request $request){
 
