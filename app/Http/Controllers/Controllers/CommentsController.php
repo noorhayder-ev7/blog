@@ -93,7 +93,7 @@ class CommentsController extends Controller
         else
             return response()->json(['message' => ' user not found']);
     }
-    
+
     public function deletecomment(Request $request){
 
         $body = $request->all();

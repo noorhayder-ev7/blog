@@ -196,8 +196,6 @@ class Usercontroller extends Controller
         else
             return response()->json(['message' => 'NOT FOUND']);
     }
-
-
     public function saveToken(Request $request)
     {
 

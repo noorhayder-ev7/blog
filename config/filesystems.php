@@ -43,10 +43,10 @@ return [
 
     'disks' => [
 
-//        'fo2' => [
-//            'driver' => 'custom',
-//            'root' => ('https://alkafeelblog.edu.turathalanbiaa.com/public/aqlam/image'),
-//        ],
+        'local' => [
+            'driver' => 'local',
+            'root' => storage_path('app'),
+        ],
 
         'public' => [
             'driver' => 'local',
