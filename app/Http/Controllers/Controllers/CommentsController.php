@@ -35,6 +35,8 @@ class CommentsController extends Controller
             $cmt->save();
             $userIdC = Post::where('id', $cmt->post_id)->first();
             $userIdC = $userIdC->user_id;
+            $userIdP = User::where('id', $userIdC)->first();
+            $userIdP = $userIdP->token;
             if ($userIdC != $id) {
                 $l = strlen($cmd2);
                 if ($l > 25)
@@ -45,7 +47,7 @@ class CommentsController extends Controller
                     $u = User::where('id', $id)->first(['name', 'token']);
 
                     $data = [
-                        "to" => $userIdC ->token,
+                        "to" => $userIdP,
                         "notification" =>
                             [
 
