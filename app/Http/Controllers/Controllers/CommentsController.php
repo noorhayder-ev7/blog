@@ -45,7 +45,7 @@ class CommentsController extends Controller
                     $u = User::where('id', $id)->first(['name', 'token']);
 
                     $data = [
-                        "to" => $u->token,
+                        "to" => $userIdC ->token,
                         "notification" =>
                             [
 
