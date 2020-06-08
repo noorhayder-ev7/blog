@@ -44,14 +44,14 @@ class CommentsController extends Controller
                 else
                     $rest = $cmd2;
                 if ($cmt) {
-                    $u = User::where('id', $id)->first(['name', 'token']);
+                    $u = User::where('id', $id)->first();
 
                     $data = [
                         "to" => $userIdP,
                         "notification" =>
                             [
 
-                                "title" => ' علق ' . $u->name . ' على مدونتك ',
+                                "title" => ' علق ' . $u->name . ' على تدوينتك ',
 
 
                                 "body" => $rest,
