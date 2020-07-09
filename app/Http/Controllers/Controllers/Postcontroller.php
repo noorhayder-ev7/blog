@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use http\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use \App\models\Post;
+use App\models\Post;
 use App\models\Comments;
 use GuzzleHttp;
 //use Illuminate\Http\Client\Response;

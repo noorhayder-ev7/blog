@@ -4,15 +4,15 @@ namespace App\Http\Controllers\Controllers;
 
 use App\blocked_user;
 use App\BlockedUser;
-use App\models\Comments;
-use App\models\Post;
-use App\models\Rates;
-use App\models\Student;
+use App\Comments;
+use App\Post;
+use App\Rates;
+use App\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\String_;
-use App\models\User;
+use App\User;
 
 class Usercontroller extends Controller
 {
@@ -288,6 +288,7 @@ class Usercontroller extends Controller
 
 
         $data = DB::select($SQL, [$my_id]);
+
         if ($data)
             return response()->json($data);
 
