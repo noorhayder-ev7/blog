@@ -36,3 +36,6 @@ Route::post('/addcomment','Controllers\CommentsController@addcomment');
 Route::post('/deletecomment','Controllers\CommentsController@deletecomment');
 Route::post('/deletepost','Controllers\Postcontroller@deletepost');
 Route::post('/updateviews','Controllers\Postcontroller@updateviews');
+Route::post('/block_user','Controllers\Usercontroller@block_user');
+Route::post('/unblock_user','Controllers\Usercontroller@unblock_user');
+Route::post('/all_block_user','Controllers\Usercontroller@all_block_user');

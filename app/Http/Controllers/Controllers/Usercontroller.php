@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Controllers;
 
+use App\blocked_user;
+use App\BlockedUser;
 use App\models\Comments;
 use App\models\Post;
 use App\models\Rates;
 use App\models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\String_;
 use App\models\User;
 
@@ -206,6 +209,56 @@ class Usercontroller extends Controller
 
         if ($data)
             return response()->json(['message' => 'update DONE']);
+
+        else
+            return response()->json(['message' => 'NOT FOUND']);
+    }
+    public function block_user(Request $request)
+    {
+
+        $body = $request->all();
+        $my_id= $body['my_id'];
+        $blocked_user_id= $body['blocked_user_id'];
+
+        $blocked_user = new BlockedUser();
+        $blocked_user->user_id = $my_id;
+        $blocked_user->blocked_user_id = $blocked_user_id;
+
+
+        if ($blocked_user->save())
+            return response()->json(['message' => 'Blocked']);
+
+        else
+            return response()->json(['message' => 'NOT FOUND']);
+    }
+    public function unblock_user(Request $request)
+    {
+
+        $body = $request->all();
+        $my_id= $body['my_id'];
+        $blocked_user_id= $body['blocked_user_id'];
+
+        $deletedRows = BlockedUser::where('user_id', $my_id)->where('blocked_user_id', $blocked_user_id)->delete();
+        if ($deletedRows)
+            return response()->json(['message' => 'unblocked']);
+
+        else
+            return response()->json(['message' => 'NOT FOUND']);
+    }
+
+    public function all_block_user(Request $request)
+    {
+
+        $body = $request->all();
+        $my_id= $body['my_id'];
+        $SQL = "SELECT users.name , users.id as user_id  
+                FROM users LEFT JOIN blocked_user ON blocked_user.blocked_user_id = users.id 
+                WHERE blocked_user.user_id = ?";
+
+
+        $data = DB::select($SQL, [$my_id]);
+        if ($data)
+            return response()->json($data);
 
         else
             return response()->json(['message' => 'NOT FOUND']);
