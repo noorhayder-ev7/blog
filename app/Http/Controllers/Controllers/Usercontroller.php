@@ -165,6 +165,37 @@ class Usercontroller extends Controller
             return response()->json($data);
         }
     }
+
+    public function userpagination2(Request $request)
+    {  $sortby=$request->input('sortby');
+        $body = $request->all();
+        $id = $body['my_id'];
+
+
+
+
+        if($sortby==0) {
+
+            $SQL = "SELECT * 
+                FROM users 
+                WHERE id not in (SELECT blocked_user_id from blocked_user where user_id = ?)";
+
+
+            $data = DB::select($SQL, [$id]);
+            return response()->json($data);
+
+        }
+        elseif ($sortby==1){
+
+            $SQL = "SELECT * 
+                FROM users 
+                WHERE id not in (SELECT blocked_user_id from blocked_user where user_id = ?) order by points desc ";
+
+            $data = DB::select($SQL, [$id]);
+            return response()->json($data);
+
+        }
+    }
     public function getSearchResults(Request $request)
     { $data = $request->get('data');
         $search_user = User::Where('name', 'like', "%{$data}%")

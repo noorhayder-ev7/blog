@@ -108,6 +108,77 @@ class Postcontroller extends Controller
         }
         return response()->json(['message'=> 'ERROR']);
     }
+    public function index2(Request $request)   //get posts depend on sort by
+    {
+        $cat=$request->input('cat');
+        $sortby=$request->input('sortby');
+        $my_id=$request->input('my_id');
+        if($cat==0) {
+
+            if ($sortby == 0)// get all posts by default
+            {
+
+                $data = Post::where('status',$st=1)->whereNotIn('user_id',function($query) {
+
+                    $query->select('user_blocked_id')->from('blocked_user')->where('user_id' , $my_id);})
+                ->with(['user', 'cat'])->
+                withCount('cmd')->
+                paginate(10);
+                return response()->json($data);
+            } elseif ($sortby == 1)//get posts depend on views
+            {
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                orderBy('views', 'desc')
+                    ->withCount('cmd')->
+                    paginate(10);
+                return response()->json($data);
+
+            } elseif ($sortby == 2)//get posts depend on recent post
+            {
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                withCount('cmd')->
+                latest()->paginate(10);
+                return response()->json($data);
+
+            }
+        }
+        elseif($cat==1) {
+            $body = $request->all();
+            $id= $body['category_id'];
+            if ($sortby == 0)// get all posts by default
+            {
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                withCount('cmd')->paginate(10);
+                return response()->json($data);
+            }
+
+            elseif ($sortby == 1)//get posts depend on views
+            {
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                where('category_id',$id)->
+                orderBy('views', 'desc')->
+                withCount('cmd')->
+                paginate(10);
+                return response()->json($data);
+
+            }
+            elseif ($sortby == 2)//get posts depend on recent post
+            {
+                $data = Post::where('status',$st=1)->
+                with(['user', 'cat'])->
+                where('category_id',$id)->
+                withCount('cmd')->
+                latest()->paginate(10);
+                return response()->json($data);
+
+            }
+        }
+        return response()->json(['message'=> 'ERROR']);
+    }
     public function addposts(Request $request)
     {
         $post = new Post();
